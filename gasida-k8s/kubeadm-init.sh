@@ -50,7 +50,7 @@ systemctl restart docker
 
 echo "enable containerd's cri usage"
 sed -i '/disabled_plugins = \[/s/.*/disabled_plugins = \[\]/' /etc/containerd/config.toml
-systemctl restart containerd.io
+systemctl restart containerd
 
 echo "[TASK 10] Disable and turn off SWAP"
 swapoff -a
@@ -59,7 +59,7 @@ echo "[TASK 11] Install Kubernetes components (kubeadm, kubelet and kubectl) - v
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 apt-get update >/dev/null 2>&1
-apt-get install -y kubelet=v1.28-00 kubectl=$1.28-00 kubeadm=$1.28-00 >/dev/null 2>&1
+apt-get install -y kubelet=1.28-00 kubectl=1.28-00 kubeadm=1.28-00 >/dev/null 2>&1
 apt-mark hold kubelet kubeadm kubectl >/dev/null 2>&1
 systemctl enable kubelet && systemctl start kubelet
 
