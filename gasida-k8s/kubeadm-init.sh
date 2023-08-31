@@ -48,6 +48,10 @@ EOT
 systemctl daemon-reload >/dev/null 2>&1
 systemctl restart docker
 
+echo "enable containerd's cri usage"
+sed -i '/disabled_plugins = \[/s/.*/disabled_plugins = \[\]/' /etc/containerd/config.toml
+systemctl restart containerd.io
+
 echo "[TASK 10] Disable and turn off SWAP"
 swapoff -a
 
