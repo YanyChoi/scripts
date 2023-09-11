@@ -60,8 +60,8 @@ swapoff -a
 echo "[TASK 11] Install Kubernetes components (kubeadm, kubelet and kubectl) - v$2"
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-apt-get update 2>/dev/null
-apt-get install -y kubelet kubectl kubeadm 2>/dev/null
+apt-get update >/dev/null 2>/dev/null
+apt-get install -y kubelet kubectl kubeadm >/dev/null 2>/dev/null
 apt-mark hold kubelet kubeadm kubectl >/dev/null 2>&1
 systemctl enable kubelet && systemctl start kubelet
 
