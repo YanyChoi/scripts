@@ -63,13 +63,14 @@ curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | 
 echo "[TASK 11] Install Metrics server - v0.6.1"
 kubectl apply -f https://raw.githubusercontent.com/gasida/KANS/main/8/metrics-server.yaml >/dev/null 2>&1
 
-#echo "[TASK 12] Install Istio"
-#curl -L https://istio.io/downloadIstio | sh -
-#cd istio-1.19.0
-#export PATH=$PWD/bin:$PATH
-#istioctl install --set profile=demo -y
+echo "[TASK 12] Install Istio"
+kubectl taint node ops-m node-role.kubernetes.io/control-plane-
+curl -L https://istio.io/downloadIstio | sh - >/dev/null 2>/dev/null
+cd istio-1.19.0
+export PATH=$PWD/bin:$PATH
+istioctl install --set profile=demo -y
 
-echo "[TASK 12] Install k9s"
+echo "[TASK 13] Install k9s"
 wget https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_amd64.tar.gz
 tar zxvf k9s_Linux_amd64.tar.gz
 chmod +x k9s
