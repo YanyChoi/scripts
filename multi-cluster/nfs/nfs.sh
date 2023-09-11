@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-apt-get update 2>/dev/null
-apt-get install -y nfs-kernel-server 2>/dev/null
+apt-get update >/dev/null 2>/dev/null
+apt-get install -y nfs-kernel-server >/dev/null 2>/dev/null
 
 mkdir -p /mnt/nfs/prod
 mkdir -p /mnt/nfs/ops

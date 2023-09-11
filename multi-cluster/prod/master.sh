@@ -20,7 +20,7 @@ sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
 rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 
 echo "[TASK 4] Install Cilium"
-cilium install --version 1.14.1  >/dev/null 2>/dev/null
+cilium install --version 1.14.1 --set ipam.mode=kubernetes --set k8s.requireIPv4PodCIDR=true >/dev/null 2>/dev/null
 
 echo "[TASK 5] Source the completion"
 # source bash-completion for kubectl kubeadm
@@ -64,7 +64,7 @@ echo "[TASK 11] Install Metrics server - v0.6.1"
 kubectl apply -f https://raw.githubusercontent.com/gasida/KANS/main/8/metrics-server.yaml >/dev/null 2>&1
 
 echo "[TASK 12] Install Istio"
-kubectl taint node ops-m node-role.kubernetes.io/control-plane-
+kubectl taint node master node-role.kubernetes.io/control-plane-
 curl -L https://istio.io/downloadIstio | sh - >/dev/null 2>/dev/null
 cd istio-1.19.0
 export PATH=$PWD/bin:$PATH
