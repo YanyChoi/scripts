@@ -16,7 +16,7 @@ CLI_ARCH=amd64
 if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
 curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum} >/dev/null 2>/dev/null
 sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
-sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
+sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin >/dev/null 2>/dev/null
 rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 
 echo "[TASK 4] Install Cilium"
@@ -58,7 +58,7 @@ echo "[TASK 9] Install Packages"
 apt install kubetail etcd-client -y -qq >/dev/null 2>&1
 
 echo "[TASK 10] Install Helm"
-curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash >/dev/null 2>&1
+curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | sed 's|${HELM_INSTALL_DIR:="/usr/local/bin"}|${HELM_INSTALL_DIR:="/usr/bin"}|g' | bash >/dev/null 2>&1
 
 echo "[TASK 11] Install Metrics server - v0.6.1"
 kubectl apply -f https://raw.githubusercontent.com/gasida/KANS/main/8/metrics-server.yaml >/dev/null 2>&1
@@ -71,8 +71,8 @@ export PATH=$PWD/bin:$PATH
 istioctl install --set profile=demo -y
 
 echo "[TASK 13] Install k9s"
-wget https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_amd64.tar.gz
-tar zxvf k9s_Linux_amd64.tar.gz
+wget https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_amd64.tar.gz >/dev/null 2>/dev/null
+tar zxvf k9s_Linux_amd64.tar.gz >/dev/null 2>/dev/null
 chmod +x k9s
 mv k9s /usr/bin
 

@@ -36,6 +36,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.provision "shell", path: "common/init.sh"
       subconfig.vm.provision "shell", path: "prod/master.sh"
       subconfig.vm.provision "shell", path: "prod/prod-nfs.sh"
+      subconfig.vm.provision "file", source: "ops/charts", destination: "$HOME/charts"
     end
   (1..3).each do |i|
     config.vm.define "worker-#{i}" do |subconfig|
@@ -74,6 +75,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.provision "shell", path: "common/init.sh"
       subconfig.vm.provision "shell", path: "ops/ops-master.sh"
       subconfig.vm.provision "shell", path: "ops/ops-nfs.sh"
+      subconfig.vm.provision "file", source: "ops/charts", destination: "$HOME/charts"
     end
     config.vm.define "ops-w1" do |subconfig|
       subconfig.vm.box = BOX_IMAGE
